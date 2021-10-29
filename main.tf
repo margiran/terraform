@@ -24,8 +24,9 @@ resource "azurerm_resource_group" "tf_test_new" {
     name  = "tfmainrg"
     location = "westeurope"
  }
-variable tag {
+variable TAG {
   type        = string
+  default     = "latest"
   description = "build version for docker image"
 }
 
@@ -40,7 +41,7 @@ variable tag {
 
     container {
         name                = "weatherapi"
-        image               = "margiran/weatherapi:${var.tag}"
+        image               = "margiran/weatherapi:${var.TAG}"
             cpu             = "1"
             memory          = "1"
 
