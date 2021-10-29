@@ -12,15 +12,23 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "tf_test" {
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "terraform_rg_blobStore"
+    storage_account_name = "margiranstorage"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
+}
+resource "azurerm_resource_group" "tf_test_new" {
     name  = "tfmainrg"
     location = "westeurope"
  }
 
  resource "azurerm_container_group" "tfcg_test" {
     name                                 = "weatherapi"
-    location                             = azurerm_resource_group.tf_test.location
-    resource_group_name                  = azurerm_resource_group.tf_test.name
+    location                             = azurerm_resource_group.tf_test_new.location
+    resource_group_name                  = azurerm_resource_group.tf_test_new.name
 
     ip_address_type         = "Public"
     dns_name_label          = "margiranwe"
@@ -36,5 +44,5 @@ resource "azurerm_resource_group" "tf_test" {
                 port        = 80
                 protocol    = "TCP"               
             }
-    }
+    }   
  }
