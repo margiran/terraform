@@ -26,6 +26,7 @@ namespace weatherApi.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.LogInformation("Get All");
             var rng = new Random();
             return Enumerable.Range(1, 8).Select(index => new WeatherForecast
             {
